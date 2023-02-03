@@ -18,5 +18,8 @@ for i in range(len(s) - 6):
             good[ss] = 1
         else:
             bad.add(ss)
-print(max(good, key=good.get))
-print(max(good.keys(), key=int))
+max_num = max(good, key=int)
+print(max_num)
+print(good[max_num])
+for key, val in sorted(good.items(), key=lambda pair: -int(pair[0])):
+    print(key, val)
