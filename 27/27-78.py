@@ -12,6 +12,7 @@ tail_ind = [[-1]*K for _ in range(M)]
 min_len = 10**9
 max_s = 0
 s = a[0]
+tail_sum[0][s % 73] = s
 for i in range(1, len(a)):
     r_el = a[i] % M
     if s < tail_sum[r_el][s % K]:
@@ -24,4 +25,4 @@ for i in range(1, len(a)):
         min_len = i - tail_ind[(M - r_el) % M][r_s]
     elif s - tail_sum[(M - r_el) % M][r_s] == max_s and i - tail_ind[(M - r_el) % M][r_s] < min_len:
         min_len = i - tail_ind[(M - r_el) % M][r_s]
-print(min_len)
+print(min_len, max_s)
