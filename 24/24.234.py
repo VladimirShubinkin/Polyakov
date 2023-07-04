@@ -5,7 +5,7 @@ def sum_pow(s):
 
 good = {}
 bad = set()
-with open('24-234.txt') as f:
+with open('24data/24-234.txt') as f:
     s = f.read().strip()
 # Вариант 1 (перебор чисел строки, медленнее)
 for i in range(len(s) - 6):
