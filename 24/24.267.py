@@ -31,10 +31,7 @@ print(max_len)
 s3 = s
 for d in '123456789' + ascii_uppercase[:6]:
     s3 = s3.replace(d, '0')
-number_of_zeros = 1
-zeros = '0' * number_of_zeros
+zeros = '0'
 while zeros in s3:
-    number_of_zeros += 1
-    zeros = '0' * number_of_zeros
-number_of_zeros -= 1
-print(number_of_zeros)
+    zeros += '0'
+print(len(zeros) - 1)
