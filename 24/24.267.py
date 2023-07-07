@@ -17,6 +17,7 @@ max_len = len(max(hex_numbers, key=len))
 print(max_len)
 
 # Вариант 2. Конечный автомат
+not_hex_digits = ascii_uppercase[6:]
 max_len = 0
 cur_len = 0
 for c in s:
