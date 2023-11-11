@@ -2,8 +2,8 @@
 
 from ipaddress import ip_network, IPv4Address
 
-address1 = '118.187.59.255'
-address2 = '118.187.65.115'
+address1 = '112.166.78.114'
+address2 = '112.166.78.117'
 for mask in range(30, 0, -1):
     try:
         net1 = ip_network(f'{address1}/{mask}', False)
