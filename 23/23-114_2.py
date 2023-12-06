@@ -7,14 +7,16 @@
 '''
 
 def f(a, b, k):
-    if a == b and k == 0:
+    if a == b:
         return 1
     if a > b or k == 0:
         return 0
-    return f(a + 1, b, k - 1) + f(a + 2, b, k - 1) + f(2 * a, b, k - 1)
+    return f(a + 1, b, k - 1) + f(a + 2, b, k - 1) + f(a * 2, b, k - 1)
 
 
-k = 0
-while not f(1, 28, k):
-    k += 1
-print(f(1, 28, k))
+for i in range(1, 28):
+    count = f(1, 28, i)
+    if count:
+        print(count, i)
+        break
+
