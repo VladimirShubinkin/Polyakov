@@ -9,7 +9,7 @@
 
 def f(a, k):
     if k == 0:
-        if 34 <= a <= 60:
+        if 34 <= a <= 59:
             ans.add(a)
         return
     f(a + 1, k - 1)
