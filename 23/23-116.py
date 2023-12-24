@@ -7,16 +7,15 @@
 '''
 
 
-def f(a, b, k):
-    if a == b and k == 0:
-        return 1
-    if a > b or k == 0:
-        return 0
-    return f(a + 1, b, k - 1) + f(a + 5, b, k - 1) + f(3 * a, b, k - 1)
+def f(a, k):
+    if k == 0:
+        ans.add(a)
+        return
+    f(a + 1, k - 1)
+    f(a + 5, k - 1)
+    f(3 * a, k - 1)
 
 
-c = 0
-for b in range(5, 300):
-    c += bool(f(1, b, 4))
-print(c)
-
+ans = set()
+f(1, 4)
+print(len(ans))
