@@ -9,7 +9,7 @@ def is_alternate(s):
     return True
 
 
-with open('24-268.txt') as f:
+with open('24data/24-268.txt') as f:
     s = f.read().strip()
 alphabet = '0123456789' + ascii_uppercase[:20]
 even_digits = alphabet[::2]
