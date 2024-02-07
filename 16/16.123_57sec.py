@@ -1,3 +1,4 @@
+from time import perf_counter
 from functools import cache
 
 
@@ -10,8 +11,12 @@ def f(n):
     return f(n // 3)
 
 
+t0 = perf_counter()
+
 c = 0
 for i in range(1, 100_000_000):
     if f(i) == 18:
         c += 1
 print(c)
+
+print(perf_counter() - t0)
