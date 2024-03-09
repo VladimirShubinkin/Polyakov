@@ -1,4 +1,4 @@
-with open('24-157.txt') as f:
+with open('24data/24-157.txt') as f:
     s = f.read().strip()
 
 pos = -1
