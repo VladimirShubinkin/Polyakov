@@ -3,7 +3,7 @@
 Гарантируется, что такая подпоследовательность существует. Если таких подпоследовательностей несколько, нужно выбрать
 подпоследовательность наименьшей длины.'''
 
-with open(r'C:\Users\PC\Documents\ЕГЭ\Поляков\27data\71\27-71a.txt') as f:
+with open('./files/27-71b.txt') as f:
     a = [int(x) for x in f.readlines()[1:]]
 
 s = 0
@@ -11,7 +11,7 @@ max_s = 0
 min_len = 10**9
 tail_s = [10**9]*69
 tail_s[0] = 0
-tail_ind = [10**9]*69
+tail_ind = [-1]*69
 for i in range(len(a)):
     s += a[i]
     r = s % 69
