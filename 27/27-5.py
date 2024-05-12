@@ -1,4 +1,4 @@
-with open('27-5b.txt') as f:
+with open('files/27-5b.txt') as f:
     n = int(f.readline())
     s = 0
     min_diffs = [10**9]*5

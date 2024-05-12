@@ -1,4 +1,4 @@
-with open('27-8b.txt') as f:
+with open('files/27-8b.txt') as f:
     n, *a = map(int, f.readlines())
 
 min_s = 10**7

@@ -1,4 +1,4 @@
-with open('27-13b.txt') as f:
+with open('files/27-13b.txt') as f:
     n, *a = map(int, f.readlines())
 
 k = k7 = k2 = k14 = 0

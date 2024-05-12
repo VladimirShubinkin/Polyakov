@@ -1,4 +1,4 @@
-with open('27-6b.txt') as f:
+with open('files/27-6b.txt') as f:
     n, *a = map(int, f.readlines())
 
 max6_1 = max6_2 = max2 = max3 = max1 = 0
