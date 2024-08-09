@@ -16,6 +16,7 @@ with open('24data/24-298.txt') as f:
     s = f.read().strip()
 
 s = s.replace('-', '*')
+# s = s.replace('*0*', '*1*') понадобилось бы, если бы не гарантия натуральности
 a = s.split('**')
 max_seq = ''
 for sub_str in a:
