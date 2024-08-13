@@ -2,20 +2,14 @@
 # >= 43
 
 
-def f(s, step, k=0):
+def f(s, step, k=-1):
     if s >= 43:
         return step % 2 == 0
     if step == 0:
         return False
-    match k:
-        case 0:
-            calls = [f(s + 1, step - 1, 1), f(s + 2, step - 1, 2), f(s * 2, step - 1, 3)]
-        case 1:
-            calls = [f(s + 2, step - 1, 2), f(s * 2, step - 1, 3)]
-        case 2:
-            calls = [f(s + 1, step - 1, 1), f(s * 2, step - 1, 3)]
-        case 3:
-            calls = [f(s + 1, step - 1, 1), f(s + 2, step - 1, 2)]
+    calls = [f(s + 1, step - 1, 0), f(s + 2, step - 1, 1), f(s * 2, step - 1, 2)]
+    if k != -1:
+        del calls[k]
     if (step - 1) % 2 == 0:
         return any(calls)
     return all(calls)
