@@ -14,6 +14,6 @@ def get_sum(x):
 
 
 count = 0
-for x in range(8, 100):
+for x in range(6, 100):
     count += get_sum(x) % 11 == 0
 print(count)
