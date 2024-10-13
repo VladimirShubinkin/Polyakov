@@ -6,7 +6,7 @@
 Сколько разных чисел может быть получено из числа 1 с помощью программ, состоящих из 4 команд?
 '''
 
-
+# Способ 1
 def f(a, k):
     if k == 0:
         ans.add(a)
@@ -19,3 +19,18 @@ def f(a, k):
 ans = set()
 f(1, 4)
 print(len(ans))
+
+# Способ 2
+def g(a, b, k):
+    if a == b:
+        return k == 0
+    if a > b or k == 0:
+        return 0
+    return g(a + 1, b, k - 1) + g(a + 5, b, k - 1) + g(a * 3, b, k - 1)
+
+
+count = 0
+for b in range(2, 200):
+    if g(1, b, 4):
+        count += 1
+print(count)
