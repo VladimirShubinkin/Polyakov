@@ -3,16 +3,13 @@ from string import ascii_uppercase
 
 with open('24-268.txt') as f:
     s = f.read().strip()
-digits_20 = '0123456789ABCDEFGHIJ'
-even_digits = digits_20[::2]
-to_remove = ascii_uppercase[10:]
-for letter in to_remove:
+for letter in ascii_uppercase[10:]:
     s = s.replace(letter, ' ')
-numbers = sorted(s.split(), key=len, reverse=True)
-for num in numbers:
-    if num[0] != '0' and num[-1] in even_digits:
-        print(num)
-        break
-
-
-
+numbers = s.split()
+max_even = '0'
+for number in numbers:
+    if number[0] != '0' and int(number, 20) % 2 == 0:
+        #  max_even = max(max_even, number, key=lambda num: int(num, 20))
+        if int(number, 20) > int(max_even, 20):
+            max_even = number
+print(max_even)
