@@ -8,6 +8,20 @@
 из которых Остаточек может получить число 80 с помощью программы длиной не более 5 команд.
 '''
 
+def g(a, b, k):
+    if a == b:
+        return 1
+    if a > b or k == 0:
+        return 0
+    return g(a + 1, b, k - 1) + g(a * 2, b, k - 1) + g(a + a % 4, b, k - 1)
+
+
+count = 0
+for a in range(1, 81):
+    if g(a, 80, 5):
+        count += 1
+print(count)
+
 
 def f(a, c):
     if c == 0:
