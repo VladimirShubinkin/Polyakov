@@ -11,7 +11,7 @@ import re
 with open('24data/24-299.txt') as f:
     s = f.read().strip()
 
-pattern = r'(?:(?:[1-9]\d*\*|0\*)*0(?:\*[1-9]\d*|\*0)*\+)+(?:(?:[1-9]\d*\*)*0(?:\*[1-9]\d*)*)'
+pattern = r'(?:(?:[1-9]\d*\*|0\*)*0(?:\*[1-9]\d*|\*0)*\+)*(?:(?:[1-9]\d*\*)*0(?:\*[1-9]\d*)*)'
 all_good_strings = re.findall(pattern, s)
 max_string_equal_zero = max(filter(lambda exp: eval(exp) == 0, all_good_strings), key=len)
 print(max_string_equal_zero)
