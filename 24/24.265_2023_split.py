@@ -1,4 +1,4 @@
-with open('24-263.txt') as f:
+with open('24data/24-263.txt') as f:
     s = f.read().strip()
 lines = s.split('Y')
 max_len = 0

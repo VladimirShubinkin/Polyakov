@@ -9,7 +9,7 @@ a = s.split('CD')
 first_len = len('CD'.join(a[:N + 1])) + 1
 last_len = len('CD'.join(a[-(N + 1):])) + 1
 max_len = max(first_len, last_len)
-for i in range(1, len(a) - N - 1):
+for i in range(1, len(a) - N):
     cur_len = len('CD'.join(a[i: i + N + 1])) + 2
     max_len = max(max_len, cur_len)
 print(max_len)
