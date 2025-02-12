@@ -34,6 +34,9 @@ for i in range(len(s)):
         if s[i] in '789':
             cur_len += 1
             cur_seq += s[i]
+            if cur_len > max_len:
+                max_len = cur_len
+                max_seq = cur_seq
             is_number = True
         else:
             cur_len = 0

@@ -11,7 +11,10 @@ import re
 with open('24data/24-300.txt') as f:
     s = f.read().strip()
 
-pattern = r'(?:(?:[1-9]\d*\*|0\*)*0(?:\*[1-9]\d*|\*0)*\+)*(?:(?:[1-9]\d*\*)*0(?:\*[1-9]\d*)*)'
+left_m = r'(?:[1-9]\d*\*|0\*)*'
+rigth_m = r'(?:\*[1-9]\d*|\*0)*'
+term = fr'{left_m}0{rigth_m}'
+pattern = fr'(?:{term}\+)*{term}'
 
 max_str = max(re.findall(pattern, s), key=len)
 print(max_str)
