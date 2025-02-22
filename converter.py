@@ -70,6 +70,6 @@ def dec_to_n(s: str, base: int) -> str:
 # print(frac_n_to_dec('101', 2))
 # print(dec_to_n('3434.565', 23))
 # print(n_to_dec(input(), int(input())))
-# print(dec_to_n(input(), int(input())))
+print(dec_to_n(input(), int(input())))
 # 19.004 -> 10
-print(int_n_to_dec('19E', 25) - int_n_to_dec('B4', 28))
+
