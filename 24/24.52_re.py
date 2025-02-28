@@ -4,20 +4,17 @@
 Если в файле несколько цепочек одинаковой длины, нужно взять первую из них.
 Выведите сначала символ, из которого строится эта подцепочка, а затем через пробел – длину этой подцепочки. '''
 
+import re
+
 with open('24data/k8-0.txt') as f:
     s = f.read().strip()
 
-c = s[0]
-ans_c = c
-cur_len = 1
+sequenses = re.finditer(r'(\w)\1+', s)
 max_len = 0
-for i in range(len(s) - 1):
-    if s[i + 1] == s[i]:
-        cur_len += 1
-    else:
-        cur_len = 1
-        c = s[i + 1]
-    if cur_len > max_len:
-        max_len = cur_len
-        ans_c = c
-print(ans_c, max_len)
+char = ''
+for seq in sequenses:
+    cur_seq = seq.group()
+    if len(cur_seq) > max_len:
+        max_len = len(cur_seq)
+        char = cur_seq[0]
+print(char, max_len)
