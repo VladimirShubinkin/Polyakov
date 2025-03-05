@@ -1,4 +1,4 @@
-with open('../26data/26-150.txt') as f:
+with open('26data/26-150.txt') as f:
     n, m, k = map(int, f.readline().split())
     place_row = {i: m + 1 for i in range(1, k + 1)}
     for line in f.readlines():
