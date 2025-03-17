@@ -1,4 +1,4 @@
-with open('24-175.txt') as f:
+with open('24data/24-175.txt') as f:
     a = [len(s) for s in f.read().strip().split('KEGE')]
 
 max_len = 0
