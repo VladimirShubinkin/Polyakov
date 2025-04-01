@@ -1,4 +1,4 @@
-with open('24-203.txt') as f:
+with open('24data/24-203.txt') as f:
     s = f.read().strip()
 
 ans = 0

@@ -7,7 +7,7 @@ def is_color(s):
 
 
 hex_digits = digits + ascii_uppercase[:6]
-with open('24-271.txt') as f:
+with open('24data/24-271.txt') as f:
     s = f.read().strip()
 
 count = 0
