@@ -9,12 +9,7 @@ import re
 with open('24data/k8-0.txt') as f:
     s = f.read().strip()
 
-sequenses = re.finditer(r'(\w)\1+', s)
-max_len = 0
-char = ''
-for seq in sequenses:
-    cur_seq = seq.group()
-    if len(cur_seq) > max_len:
-        max_len = len(cur_seq)
-        char = cur_seq[0]
-print(char, max_len)
+max_seq = ''
+for m in re.finditer(r'(\w)\1+', s):
+    max_seq = max(max_seq, m.group(), key=len)
+print(max_seq[0], len(max_seq))
