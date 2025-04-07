@@ -68,8 +68,8 @@ def dec_to_n(s: str, base: int) -> str:
 # print(int_dec_to_n(3434, 23))
 # print(int_n_to_dec('567', 8))
 # print(frac_n_to_dec('101', 2))
-# print(dec_to_n('3434.565', 23))
+print(dec_to_n('3434.565', 23))
 # print(n_to_dec(input(), int(input())))
-print(dec_to_n(input(), int(input())))
+# print(dec_to_n(input(), int(input())))
 # 19.004 -> 10
 
