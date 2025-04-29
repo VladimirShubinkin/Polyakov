@@ -2,7 +2,7 @@ from time import perf_counter
 
 t0 = perf_counter()
 
-with open('files/26-53.txt') as f:
+with open('26data/26-53.txt') as f:
     n, *a = map(int, f.readlines())
 
 count = 0

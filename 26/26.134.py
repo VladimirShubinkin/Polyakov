@@ -1,4 +1,4 @@
-with open('files/26-134.txt') as f:
+with open('26data/26-134.txt') as f:
     n, T = map(int, f.readline().split())
     queues = {'G': [], 'W': [], 'M': []}
     for line in f.readlines():
