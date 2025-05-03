@@ -1,20 +1,16 @@
 with open('./26data/26-129.txt') as f:
     n = int(f.readline())
+    grinding_count = 0
     details = []
     for i in range(1, n + 1):
         grinding, coloring = map(int, f.readline().split())
-        details.append((i, 'G', grinding))
-        details.append((i, 'C', coloring))
-details.sort(key=lambda t: t[2])
+        if grinding < coloring:
+            details.append((grinding, i, 'G'))
+            grinding_count += 1
+        else:
+            details.append((coloring, i, 'C'))
 
-used = set()
-grinding_count = 0
-last_ind = -1
-last_mark = ''
-for i, mark, time in details:
-    if i not in used:
-        used.add(i)
-        grinding_count += mark == 'G'
-        last_ind = i
-        last_mark = mark
-print(last_ind, grinding_count - (last_mark == 'G'))
+details.sort()
+last = details[-1]
+
+print(last[1], grinding_count - (last[-1] == 'G'))
