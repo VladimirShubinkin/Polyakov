@@ -25,7 +25,7 @@ for t0, dt, nk in times:
             if t0 >= kols[i][j]:
                 del kols[i][j]
     # рассматриваем колонку с номером nk, если nk != 0, либо колонку с меньшей очередью
-    i = nk if nk else kols.index(min(kols, key=len))
+    i = nk if nk else kols.index(min(kols[1:], key=len))
     # если на выбранной колонке большая очередь, клиент уезжает
     if len(kols[i]) >= 5:
         count += 1
