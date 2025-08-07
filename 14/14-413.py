@@ -8,11 +8,12 @@ from string import ascii_uppercase, digits
 alphabet = digits + ascii_uppercase
 
 for p in range(7, 37):
-    for x in range(1, p):
-        for y in range(1, p):
-            for z in range(p):
-                left = int(f'{alphabet[y]}3{alphabet[y]}', p) + int(f'{alphabet[y]}65', p)
-                right = int(f'{alphabet[x]}2{alphabet[z]}0', p)
+    for x in alphabet[1:p]:
+        for y in alphabet[1:p]:
+            for z in alphabet[:p]:
+                left = int(f'{y}3{y}', p) + int(f'{y}65', p)
+                right = int(f'{x}2{z}0', p)
                 if left == right:
-                    print(int(f'{alphabet[x]}{alphabet[y]}{alphabet[z]}', p))
+                    print(int(f'{x}{y}{z}', p))
+                    print('x y z p')
                     print(x, y, z, p)
