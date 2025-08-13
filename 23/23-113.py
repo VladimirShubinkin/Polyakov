@@ -29,7 +29,7 @@ print(min(lens))
 def g(a, b, k):
     if a > b or k < 0:
         return 0
-    if a == b and k == 0:
+    if a == b:
         return 1
     return g(a + 1, b, k - 1) + g(a + 5, b, k - 1) + g(a * 3, b, k - 1)
 
