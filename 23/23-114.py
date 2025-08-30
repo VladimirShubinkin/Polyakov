@@ -7,7 +7,7 @@
 '''
 
 def f(a, b, k):
-    if a == b and k == 0:
+    if a == b:
         return 1
     if a > b or k == 0:
         return 0
