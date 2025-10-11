@@ -7,5 +7,5 @@ import re
 with open('24data/k7b-1.txt') as f:
     s = f.read().strip()
 
-max_seq = max(re.findall(r'(?:EAB)+(?:EA|E)', s), key=len)
+max_seq = max(re.findall(r'(?:EAB)+(?:EA|E)?', s), key=len)
 print(len(max_seq))
