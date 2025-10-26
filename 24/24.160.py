@@ -1,6 +1,6 @@
 from string import ascii_uppercase
 
-with open('24-s1.txt') as f:
+with open('24data/24-s1.txt') as f:
     a = f.readlines()
 
 str_with_a = a[0]
