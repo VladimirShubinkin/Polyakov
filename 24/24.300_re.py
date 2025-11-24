@@ -8,14 +8,14 @@
 
 import re
 
-with open('24data/24-300.txt') as f:
+with open('24/24data/24-300.txt') as f:
     s = f.read().strip()
 
-left_m = r'(?:[1-9]\d*\*|0\*)*'
-rigth_m = r'(?:\*[1-9]\d*|\*0)*'
-term = fr'{left_m}0{rigth_m}'
-pattern = fr'(?:{term}\+)*{term}'
-
-max_str = max(re.findall(pattern, s), key=len)
-print(max_str)
-print(len(max_str))
+number = r'(?:[1-9]\d*|0)'
+left = fr'(?:{number}\*)*'
+right = fr'(?:\*{number})*'
+term = fr'{left}0{right}'
+pattern = fr'(?:{term}\+)+{term}'
+max_seq = max(re.findall(pattern, s), key=len)
+print(max_seq)
+print(len(max_seq))
