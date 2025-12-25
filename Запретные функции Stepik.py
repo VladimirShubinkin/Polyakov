@@ -13,6 +13,9 @@ def bin(*args, **kwargs):
 def len(*args, **kwargs):
     raise NameError('В этой задаче запрещено использование функции len()')
 
+def str(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции str()')
+
 def sorted(*args, **kwargs):
     raise NameError('В этой задаче запрещено использование функции sorted()')
 
