@@ -1,16 +1,31 @@
-def sum_range(first_bound, second_bound):
-    if first_bound > second_bound:
-        first_bound, second_bound = second_bound, first_bound
-    s = 0
-    for x in range(first_bound, second_bound + 1):
-        s += x
-    return s
+def max(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции max()')
+
+def min(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции min()')
+
+def sum(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции sum()')
+
+def bin(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции bin()')
+
+def len(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции len()')
+
+def sorted(*args, **kwargs):
+    raise NameError('В этой задаче запрещено использование функции sorted()')
+
+class list:
+    raise NameError('В этой задаче запрещено использовние списков')
+
+# запрет импорта
+import sys
+
+class ImportTracker:
+    def find_spec(self, fullname, path, target=None):
+        raise NameError('Решите задачу без использования готовых функций')
 
 
-print(sum_range(0, 5))
-print(sum_range(3, -5))
-print(sum_range(second_bound=6, first_bound=3))
-print(sum_range(-10**6, 10**6))
-print(sum_range(0, 10**6))
-print(sum_range(-30, -100))
-print(sum_range(-3, -3))
+sys.meta_path.insert(0, ImportTracker())
+
