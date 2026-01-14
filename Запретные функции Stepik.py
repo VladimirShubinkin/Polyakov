@@ -19,8 +19,6 @@ def str(*args, **kwargs):
 def sorted(*args, **kwargs):
     raise NameError('В этой задаче запрещено использование функции sorted()')
 
-class list:
-    raise NameError('В этой задаче запрещено использование списков')
 
 # запрет импорта
 import sys
