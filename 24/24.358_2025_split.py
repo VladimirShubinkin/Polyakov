@@ -6,15 +6,12 @@
 '''
 with open('24data/24-358.txt') as f:
     s = f.read().strip()
+for d in '2468':
+    s = s.replace(d, '0')
+lines = s.split('0')[1:]
 max_len = 0
-pos_even = len(s)
-count_S = 0
-for i in range(len(s)):
-    if s[i] in '02468':
-        count_S = 0
-        pos_even = i
-    elif s[i] == 'S':
-        count_S += 1
-        if count_S == 32:
-            max_len = max(max_len, i - pos_even)
+for line in lines:
+    if line.count('S') >= 31:
+        cur_len = 1 + len('S'.join(line.split('S')[:32]))
+        max_len = max(max_len, cur_len)
 print(max_len)

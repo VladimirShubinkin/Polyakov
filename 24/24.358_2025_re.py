@@ -4,17 +4,12 @@
 среди которых ровно 31 буква S, начинающуюся чётной цифрой, не содержащую других чётных цифр, кроме первой.
 В ответе запишите число – количество символов в найденной последовательности.
 '''
+import re
+
 with open('24data/24-358.txt') as f:
     s = f.read().strip()
-max_len = 0
-pos_even = len(s)
-count_S = 0
-for i in range(len(s)):
-    if s[i] in '02468':
-        count_S = 0
-        pos_even = i
-    elif s[i] == 'S':
-        count_S += 1
-        if count_S == 32:
-            max_len = max(max_len, i - pos_even)
+
+pattern = r'[02468](?:[^S02468]*S){32}'
+max_seq = max(re.findall(pattern, s), key=len)[:-1]
+max_len = len(max_seq)
 print(max_len)
