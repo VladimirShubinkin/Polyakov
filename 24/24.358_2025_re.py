@@ -9,7 +9,8 @@ import re
 with open('24data/24-358.txt') as f:
     s = f.read().strip()
 
-pattern = r'[02468](?:[^S02468]*S){32}'
-max_seq = max(re.findall(pattern, s), key=len)[:-1]
+pattern = r'[02468](?:[^S02468]*S){31}[^S02468]*'
+max_seq = max(re.findall(pattern, s), key=len)
 max_len = len(max_seq)
+print(max_seq)
 print(max_len)
