@@ -8,14 +8,17 @@
 
 with open('24_23206.txt') as f:
     s = f.read().strip()
+
 max_len = 0
-pos_even = len(s)
 count_S = 0
+pos_even = len(s)
 for i in range(len(s)):
     if s[i] in '02468':
-        count_S = 0
+        if count_S == 35:
+            max_len = max(max_len, i - pos_even)
         pos_even = i
-    elif s[i] == 'S':
+        count_S = 0
+    if s[i] == 'S':
         count_S += 1
         if count_S == 36:
             max_len = max(max_len, i - pos_even)
