@@ -1,24 +1,37 @@
+from functools import total_ordering
+
+
+@total_ordering
 class RomanNumber:
+    to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'),
+                  ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
+    roma_arab = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    arab_roma = {1000: 'M', 500: 'D', 100: 'C', 50: 'L', 10: 'X', 5: 'V', 1: 'I'}
+    rom_digits = 'IVXLCDM'
+
     def __init__(self, inp: int|str):
-        self.to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'),
-                           ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
-        self.roma_arab = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-        self.arab_roma = {1000: 'M', 500: 'D', 100: 'C', 50: 'L', 10: 'X', 5: 'V', 1: 'I'}
         if isinstance(inp, int):
+            if inp > 3999:
+                raise ValueError('Слишком большое число')
             self.dec_num = inp
             self.rom_num = self.to_roman()
-        else:
+        elif isinstance(inp, str) and all(d in self.rom_digits for d in inp):
             self.rom_num = inp
             self.dec_num = self.to_arabic()
+        else:
+            raise ValueError('Не число')
 
     def __add__(self, other):
-        return RomanNumber(self.dec_num + other.dec_num)
+        if isinstance(other, self.__class__):
+            return RomanNumber(self.dec_num + other.dec_num)
 
     def __iadd__(self, other):
-        return RomanNumber(self.dec_num + other.dec_num)
+        self.dec_num += other.dec_num
+        return self
 
     def __imul__(self, other):
-        return RomanNumber(self.dec_num * other.dec_num)
+        self.dec_num *= other.dec_num
+        return self
 
     def __mul__(self, other):
         return RomanNumber(self.dec_num * other.dec_num)
@@ -31,15 +44,6 @@ class RomanNumber:
 
     def __eq__(self, other):
         return self.dec_num == other.dec_num
-
-    def __ge__(self, other):
-        return self.dec_num >= other.dec_num
-
-    def __gt__(self, other):
-        return self.dec_num > other.dec_num
-
-    def __le__(self, other):
-        return self.dec_num <= other.dec_num
 
     def __lt__(self, other):
         return self.dec_num < other.dec_num
