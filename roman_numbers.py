@@ -2,45 +2,58 @@ from functools import total_ordering
 
 
 @total_ordering
-class RomanNumber:
-    to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'),
-                  ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
-    roma_arab = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-    arab_roma = {1000: 'M', 500: 'D', 100: 'C', 50: 'L', 10: 'X', 5: 'V', 1: 'I'}
+class RomanNumeral:
     rom_digits = 'IVXLCDM'
 
     def __init__(self, inp: int|str):
         if isinstance(inp, int):
-            if inp > 3999:
-                raise ValueError('Слишком большое число')
+            if not 1 <= inp <= 3999:
+                raise ValueError('Некорректное число')
             self.dec_num = inp
-            self.rom_num = self.to_roman()
         elif isinstance(inp, str) and all(d in self.rom_digits for d in inp):
-            self.rom_num = inp
-            self.dec_num = self.to_arabic()
+            self.dec_num = self.to_arabic(inp)
         else:
             raise ValueError('Не число')
 
     def __add__(self, other):
         if isinstance(other, self.__class__):
-            return RomanNumber(self.dec_num + other.dec_num)
+            return self.__class__(self.dec_num + other.dec_num)
+        if isinstance(other, int):
+            return self.__class__(self.dec_num + other)
+        if isinstance(other, str):
+            return self + self.__class__(other)
+        return NotImplemented
 
     def __iadd__(self, other):
-        self.dec_num += other.dec_num
-        return self
+        if isinstance(other, self.__class__):
+            if self.dec_num + other.dec_num > 3999:
+                return ValueError('Слишком большое число')
+            self.dec_num += other.dec_num
+            return self
+        if isinstance(other, int):
+            if self.dec_num + other > 3999:
+                raise ValueError('Слишком большое число')
+            self.dec_num += other
+            return self
+        if isinstance(other, str):
+            if self.dec_num + self.to_arabic(other) > 3999:
+                raise ValueError('Слишком большое число')
+            self.dec_num += self.to_arabic(other)
+            return self
+        return NotImplemented
 
     def __imul__(self, other):
         self.dec_num *= other.dec_num
         return self
 
     def __mul__(self, other):
-        return RomanNumber(self.dec_num * other.dec_num)
+        return self.__class__(self.dec_num * other.dec_num)
 
     def __repr__(self):
-        return f"RomanNumber('{self.rom_num}')"
+        return f"{self.__class__.__name__}('{self.to_roman(self.dec_num)}')"
 
     def __str__(self):
-        return self.rom_num
+        return self.to_roman(self.dec_num)
 
     def __eq__(self, other):
         return self.dec_num == other.dec_num
@@ -51,30 +64,37 @@ class RomanNumber:
     def __int__(self):
         return self.dec_num
 
-    def to_arabic(self):
-        s = self.rom_num
-        for with_subtract, without_subtract in self.to_replace:
-            s = s.replace(with_subtract, without_subtract)
-        return sum(map(lambda d: self.roma_arab[d], s))
+    def __hash__(self):
+        return hash((self.dec_num, self.to_roman(self.dec_num)))
 
-    def to_roman(self):
+    @staticmethod
+    def to_arabic(s: str):
+        to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'), ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
+        roma_arab = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        for with_subtract, without_subtract in to_replace:
+            s = s.replace(with_subtract, without_subtract)
+        return sum(map(lambda d: roma_arab[d], s))
+
+    @staticmethod
+    def to_roman(n: int):
+        to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'), ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
+        arab_roma = {1000: 'M', 500: 'D', 100: 'C', 50: 'L', 10: 'X', 5: 'V', 1: 'I'}
         result = ''
-        n = self.dec_num
-        for dec, rom in self.arab_roma.items():
+        for dec, rom in arab_roma.items():
             result += rom * (n // dec)
             n %= dec
-        for with_subtract, without_subtract in self.to_replace:
+        for with_subtract, without_subtract in to_replace:
             result = result.replace(without_subtract, with_subtract)
         return result
 
 
 
 def roman_to_arabic(roman_num: str) -> int:
-    return RomanNumber(roman_num).dec_num
+    return RomanNumeral(roman_num).dec_num
 
 
-def arabic_to_roman(num: int) -> RomanNumber:
-    return RomanNumber(num)
+def arabic_to_roman(num: int) -> RomanNumeral:
+    return RomanNumeral(num)
 
 # print(roman_to_arabic('XXX'))
 # print(roman_to_arabic('XIX'))
@@ -93,9 +113,11 @@ def arabic_to_roman(num: int) -> RomanNumber:
 # print(RomanNumber(15) + RomanNumber('IX'))
 # print(int(RomanNumber('XXX')))
 # print(RomanNumber('IV') >= RomanNumber(5))
-# a = RomanNumber(33)
-# b = RomanNumber('III')
-# a += b
-# print(a)
+a = RomanNumeral(33)
+# b = RomanNumeral('III')
+# b = 10
+b = 'II'
+a += b
+print(a)
 # b *= a
 # print(a, b)
