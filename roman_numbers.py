@@ -1,59 +1,98 @@
 from functools import total_ordering
+from itertools import combinations
 
 
 @total_ordering
 class RomanNumeral:
-    rom_digits = 'IVXLCDM'
-
     def __init__(self, inp: int|str):
         if isinstance(inp, int):
-            if not 1 <= inp <= 3999:
-                raise ValueError('Некорректное число')
+            if self.is_valid_dec_num(inp):
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num = inp
-        elif isinstance(inp, str) and all(d in self.rom_digits for d in inp):
+        elif isinstance(inp, str) and self.is_valid_rom_num(inp):
             self.dec_num = self.to_arabic(inp)
         else:
             raise ValueError('Не число')
 
+    @property
+    def rom_num(self):
+        return self.to_roman(self.dec_num)
+
     def __add__(self, other):
         if isinstance(other, self.__class__):
+            if not self.is_valid_dec_num(self.dec_num + other.dec_num):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self.__class__(self.dec_num + other.dec_num)
         if isinstance(other, int):
+            if not self.is_valid_dec_num(self.dec_num + other):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self.__class__(self.dec_num + other)
         if isinstance(other, str):
+            if not self.is_valid_dec_num(self.dec_num + self.to_arabic(other)):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self + self.__class__(other)
         return NotImplemented
 
+    __radd__ = __add__
+
     def __iadd__(self, other):
         if isinstance(other, self.__class__):
-            if self.dec_num + other.dec_num > 3999:
-                return ValueError('Слишком большое число')
+            if not self.is_valid_dec_num(self.dec_num + other.dec_num):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num += other.dec_num
             return self
         if isinstance(other, int):
-            if self.dec_num + other > 3999:
-                raise ValueError('Слишком большое число')
+            if not self.is_valid_dec_num(self.dec_num + other):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num += other
             return self
         if isinstance(other, str):
-            if self.dec_num + self.to_arabic(other) > 3999:
-                raise ValueError('Слишком большое число')
+            if not self.is_valid_dec_num(self.dec_num + self.to_arabic(other)):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num += self.to_arabic(other)
             return self
         return NotImplemented
 
-    def __imul__(self, other):
-        self.dec_num *= other.dec_num
-        return self
-
     def __mul__(self, other):
-        return self.__class__(self.dec_num * other.dec_num)
+        if isinstance(other, self.__class__):
+            if not self.is_valid_dec_num(self.dec_num * other.dec_num):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            return self.__class__(self.dec_num * other.dec_num)
+        if isinstance(other, int):
+            if not self.is_valid_dec_num(self.dec_num * other):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            return self.__class__(self.dec_num * other)
+        if isinstance(other, str):
+            if not self.is_valid_dec_num(self.dec_num * self.to_arabic(other)):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            return self * self.__class__(other)
+        return NotImplemented
+
+    __rmul__ = __mul__
+
+    def __imul__(self, other):
+        if isinstance(other, self.__class__):
+            if not self.is_valid_dec_num(self.dec_num * other.dec_num):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            self.dec_num *= other.dec_num
+            return self
+        if isinstance(other, int):
+            if not self.is_valid_dec_num(self.dec_num * other):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            self.dec_num *= other
+            return self
+        if isinstance(other, str):
+            if not self.is_valid_dec_num(self.dec_num * self.to_arabic(other)):
+                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            self.dec_num *= self.to_arabic(other)
+            return self
+        return NotImplemented
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.to_roman(self.dec_num)}')"
+        return f"{self.__class__.__name__}('{self.rom_num}')"
 
     def __str__(self):
-        return self.to_roman(self.dec_num)
+        return self.rom_num
 
     def __eq__(self, other):
         return self.dec_num == other.dec_num
@@ -65,7 +104,26 @@ class RomanNumeral:
         return self.dec_num
 
     def __hash__(self):
-        return hash((self.dec_num, self.to_roman(self.dec_num)))
+        return hash((self.dec_num, self.rom_num))
+
+    @staticmethod
+    def is_valid_dec_num(n: int):
+        return 1 <= n <= 3999
+
+    @staticmethod
+    def is_valid_rom_num(s: str):
+        rom_digits = 'IVXLCDM'
+        if not all(d in rom_digits for d in s):
+            return False
+        if any(d * 4 in s for d in rom_digits):
+            return False
+        to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'), ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
+        for with_subtract, without_subtract in to_replace:
+            s = s.replace(with_subtract, without_subtract)
+        for p in combinations(rom_digits, 2):
+            if ''.join(p) in s:
+                return False
+        return True
 
     @staticmethod
     def to_arabic(s: str):
