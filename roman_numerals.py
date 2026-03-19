@@ -6,7 +6,7 @@ from itertools import combinations
 class RomanNumeral:
     def __init__(self, inp: int|str):
         if isinstance(inp, int):
-            if self.is_valid_dec_num(inp):
+            if not self.is_valid_dec_num(inp):
                 raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num = inp
         elif isinstance(inp, str) and self.is_valid_rom_num(inp):
@@ -21,15 +21,17 @@ class RomanNumeral:
     def __add__(self, other):
         if isinstance(other, self.__class__):
             if not self.is_valid_dec_num(self.dec_num + other.dec_num):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self.__class__(self.dec_num + other.dec_num)
         if isinstance(other, int):
             if not self.is_valid_dec_num(self.dec_num + other):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self.__class__(self.dec_num + other)
         if isinstance(other, str):
+            if not self.is_valid_rom_num(other):
+                raise ValueError('Некорректное число.')
             if not self.is_valid_dec_num(self.dec_num + self.to_arabic(other)):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self + self.__class__(other)
         return NotImplemented
 
@@ -38,17 +40,19 @@ class RomanNumeral:
     def __iadd__(self, other):
         if isinstance(other, self.__class__):
             if not self.is_valid_dec_num(self.dec_num + other.dec_num):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num += other.dec_num
             return self
         if isinstance(other, int):
             if not self.is_valid_dec_num(self.dec_num + other):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num += other
             return self
         if isinstance(other, str):
+            if not self.is_valid_rom_num(other):
+                raise ValueError('Некорректное число.')
             if not self.is_valid_dec_num(self.dec_num + self.to_arabic(other)):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num += self.to_arabic(other)
             return self
         return NotImplemented
@@ -56,15 +60,17 @@ class RomanNumeral:
     def __mul__(self, other):
         if isinstance(other, self.__class__):
             if not self.is_valid_dec_num(self.dec_num * other.dec_num):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self.__class__(self.dec_num * other.dec_num)
         if isinstance(other, int):
             if not self.is_valid_dec_num(self.dec_num * other):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self.__class__(self.dec_num * other)
         if isinstance(other, str):
+            if not self.is_valid_rom_num(other):
+                raise ValueError('Некорректное число.')
             if not self.is_valid_dec_num(self.dec_num * self.to_arabic(other)):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             return self * self.__class__(other)
         return NotImplemented
 
@@ -73,17 +79,19 @@ class RomanNumeral:
     def __imul__(self, other):
         if isinstance(other, self.__class__):
             if not self.is_valid_dec_num(self.dec_num * other.dec_num):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num *= other.dec_num
             return self
         if isinstance(other, int):
             if not self.is_valid_dec_num(self.dec_num * other):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num *= other
             return self
         if isinstance(other, str):
+            if not self.is_valid_rom_num(other):
+                raise ValueError('Некорректное число.')
             if not self.is_valid_dec_num(self.dec_num * self.to_arabic(other)):
-                return ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
             self.dec_num *= self.to_arabic(other)
             return self
         return NotImplemented
@@ -95,10 +103,33 @@ class RomanNumeral:
         return self.rom_num
 
     def __eq__(self, other):
-        return self.dec_num == other.dec_num
+        if isinstance(other, self.__class__):
+            return self.dec_num == other.dec_num
+        if isinstance(other, int):
+            if not self.is_valid_dec_num(other):
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            return self.dec_num == other
+        if isinstance(other, str):
+            if not self.is_valid_rom_num(other):
+                raise ValueError('Некорректное число.')
+            return self.rom_num == other
+        return NotImplemented
 
     def __lt__(self, other):
-        return self.dec_num < other.dec_num
+        if isinstance(other, self.__class__):
+            return self.dec_num < other.dec_num
+        if isinstance(other, int):
+            if not self.is_valid_dec_num(other):
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            return self.dec_num < other
+        if isinstance(other, str):
+            if not self.is_valid_rom_num(other):
+                raise ValueError('Некорректное число.')
+            other_dec = self.to_arabic(other)
+            if not self.is_valid_dec_num(other_dec):
+                raise ValueError('Некорректное число. Число должно быть в диапазоне [1, 3999]')
+            return self.dec_num < other_dec
+        return NotImplemented
 
     def __int__(self):
         return self.dec_num
@@ -120,6 +151,8 @@ class RomanNumeral:
         to_replace = (('CM', 'DCCCC'), ('CD', 'CCCC'), ('XC', 'LXXXX'), ('XL', 'XXXX'), ('IX', 'VIIII'), ('IV', 'IIII'))
         for with_subtract, without_subtract in to_replace:
             s = s.replace(with_subtract, without_subtract)
+        if any(d * 5 in s for d in rom_digits):
+            return False
         for p in combinations(rom_digits, 2):
             if ''.join(p) in s:
                 return False
@@ -174,8 +207,11 @@ def arabic_to_roman(num: int) -> RomanNumeral:
 a = RomanNumeral(33)
 # b = RomanNumeral('III')
 # b = 10
-b = 'II'
-a += b
+b = 'C'
+print(b + a)
+a *= b
+
 print(a)
+
 # b *= a
 # print(a, b)
