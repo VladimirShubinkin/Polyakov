@@ -11,6 +11,8 @@ class RomanNumeral:
             self.dec_num = inp
         elif isinstance(inp, str) and self.is_valid_rom_num(inp):
             self.dec_num = self.to_arabic(inp)
+        elif isinstance(inp, self.__class__):
+            self.dec_num = inp.dec_num
         else:
             raise ValueError('Не число')
 
@@ -266,10 +268,14 @@ def arabic_to_roman(num: int) -> RomanNumeral:
 # print(a >= b)
 # print(a <= b)
 
-roman = RomanNumeral('L')
-print(roman.__eq__(1))
-print(roman.__ne__(1.1))
-print(roman.__gt__(range(5)))
-print(roman.__lt__([1, 2, 3]))
-print(roman.__ge__({4, 5, 6}))
-print(roman.__le__({1: 'one'}))
+# roman = RomanNumeral('L')
+# print(roman.__eq__(1))
+# print(roman.__ne__(1.1))
+# print(roman.__gt__(range(5)))
+# print(roman.__lt__([1, 2, 3]))
+# print(roman.__ge__({4, 5, 6}))
+# print(roman.__le__({1: 'one'}))
+
+a = RomanNumeral('CCC')
+b = RomanNumeral(a)
+print(b)
