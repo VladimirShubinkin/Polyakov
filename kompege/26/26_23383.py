@@ -8,7 +8,7 @@ max_count = 0
 min_point = 10**6
 for point, nums in points.items():
     numbers = sorted(nums)
-    cur_count = 0
+    cur_count = 1
     for i in range(1, len(numbers)):
         if numbers[i] == numbers[i - 1] + 1:
             cur_count += 1
