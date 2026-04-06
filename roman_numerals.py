@@ -220,7 +220,7 @@ class RomanNumeral:
 
 
 def roman_to_arabic(roman_num: str) -> int:
-    return RomanNumeral(roman_num).dec_num
+    return int(RomanNumeral(roman_num))
 
 
 def arabic_to_roman(num: int) -> RomanNumeral:
@@ -276,6 +276,11 @@ def arabic_to_roman(num: int) -> RomanNumeral:
 # print(roman.__ge__({4, 5, 6}))
 # print(roman.__le__({1: 'one'}))
 
-a = RomanNumeral('CCC')
-b = RomanNumeral(a)
-print(b)
+# a = RomanNumeral('CCC')
+# b = RomanNumeral(a)
+# print(b)
+
+a = [RomanNumeral(11), RomanNumeral('XX'), 'XIX']
+print(sorted(a))
+
+print(a[0])

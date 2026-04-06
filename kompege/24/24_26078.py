@@ -21,7 +21,7 @@ for right in range(len(s)):
 print(min_len)
 
 
-# ДЦ Очень медленно
+# ДЦ Очень медленно > 25 минут
 from time import perf_counter
 
 t0 = perf_counter()
