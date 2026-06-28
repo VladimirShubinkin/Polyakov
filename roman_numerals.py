@@ -176,6 +176,9 @@ class RomanNumeral:
     def __hash__(self):
         return hash((self.dec_num, self.rom_num))
 
+    def __len__(self):
+        return len(self.rom_num)
+
     @staticmethod
     def is_valid_dec_num(n: int):
         return 1 <= n <= 3999
@@ -280,7 +283,16 @@ def arabic_to_roman(num: int) -> RomanNumeral:
 # b = RomanNumeral(a)
 # print(b)
 
-a = [RomanNumeral(11), RomanNumeral('XX'), 'XIX']
-print(sorted(a))
+# a = [RomanNumeral(11), RomanNumeral('XX'), 'XIX']
+# print(sorted(a))
+#
+# print(a[0])
 
-print(a[0])
+all_numbers = [RomanNumeral(i) for i in range(1, 4000)]
+sorted_all = sorted(all_numbers, key=lambda n: (len(n), int(n)), reverse=True)
+# print(*sorted_all[:50], sep='\n')
+from collections import Counter
+
+counter = Counter(len(n) for n in sorted_all)
+for i in range(15, 0, -1):
+    print(i, counter[i])
