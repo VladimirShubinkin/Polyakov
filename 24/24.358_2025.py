@@ -11,6 +11,8 @@ pos_even = len(s)
 count_S = 0
 for i in range(len(s)):
     if s[i] in '02468':
+        if count_S == 31:
+            max_len = max(max_len, i - pos_even)
         count_S = 0
         pos_even = i
     elif s[i] == 'S':

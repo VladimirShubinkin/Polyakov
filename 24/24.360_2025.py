@@ -6,12 +6,13 @@
 В ответе запишите число – количество символов в найденной последовательности.
 '''
 with open('24data/24-360.txt') as f:
-    s = f.read().strip()
-for d in '2468':
-    s = s.replace(d, '0')
-lines = s.split('0')[1:-1]
+    s = f.read()
+
+prev_even_pos = len(s)
 max_len = 0
-for line in lines:
-    if len(set(line)) == 1 and line[0].isalpha():
-        max_len = max(max_len, len(line) + 2)
+for i in range(len(s)):
+    if s[i] in '02468':
+        if len(set(s[prev_even_pos + 1:i])) == 1 and s[i - 1].isalpha():
+            max_len = max(max_len, i - prev_even_pos + 1)
+        prev_even_pos = i
 print(max_len)
