@@ -72,5 +72,6 @@ def dec_to_n(s: str, base: int) -> str:
 # print(n_to_dec(input(), int(input())))
 # print(dec_to_n(input(), int(input())))
 # 19.004 -> 10
-print(dec_to_n('0.567', 16))
-
+# print(dec_to_n('0.567', 16))
+for x in [150, 50, 540, 155, 135]:
+    print(f'{x}_{{10}}={int_dec_to_n(x, 20)}_{{20}}; ', end='')

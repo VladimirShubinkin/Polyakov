@@ -1,0 +1,2 @@
+# https://stepik.org/lesson/571244/step/6?discussion=7760935&unit=565785
+print(*map(lambda d: d[0].strftime('%d.%m.%Y'), sorted(set((lambda dates_counts: [d_c for d_c in dates_counts if d_c[-1] == dates_counts[-1][-1]])(sorted((lambda dates: [(d, dates.count(d)) for d in dates])((lambda a: [__import__('datetime').datetime.strptime(line.split()[-1], '%d.%m.%Y') for line in a])([input() for _ in range(int(input()))])), key=lambda p: p[1]))))), sep='\n')
